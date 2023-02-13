@@ -5,8 +5,6 @@ VisualStudioVersion = 17.3.32922.545
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Battleships.WpfView", "Battleships.WpfView\Battleships.WpfView.csproj", "{92413C8B-8EC6-4302-8AC9-3B0428F74D4E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Battleships.ViewModel", "Battleships.ViewModel\Battleships.ViewModel.csproj", "{703A1CE7-755F-4607-A4B3-625EAA2F545A}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Battleships.Core", "Battleships.Core\Battleships.Core.csproj", "{C35AF963-CAFB-495A-926E-F4A15E200B7F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{95E117D6-0224-47E8-8D6B-E09F2C59C1F5}"
@@ -23,10 +21,6 @@ Global
 		{92413C8B-8EC6-4302-8AC9-3B0428F74D4E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{92413C8B-8EC6-4302-8AC9-3B0428F74D4E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{92413C8B-8EC6-4302-8AC9-3B0428F74D4E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{703A1CE7-755F-4607-A4B3-625EAA2F545A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{703A1CE7-755F-4607-A4B3-625EAA2F545A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{703A1CE7-755F-4607-A4B3-625EAA2F545A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{703A1CE7-755F-4607-A4B3-625EAA2F545A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C35AF963-CAFB-495A-926E-F4A15E200B7F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C35AF963-CAFB-495A-926E-F4A15E200B7F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C35AF963-CAFB-495A-926E-F4A15E200B7F}.Release|Any CPU.ActiveCfg = Release|Any CPU

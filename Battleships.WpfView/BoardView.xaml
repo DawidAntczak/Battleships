@@ -1,0 +1,67 @@
+﻿<views:MvxWpfView x:Class="Battleships.WpfView.BoardView"
+      xmlns:views="clr-namespace:MvvmCross.Platforms.Wpf.Views;assembly=MvvmCross.Platforms.Wpf"
+      xmlns:mvx="clr-namespace:MvvmCross.Platforms.Wpf.Binding;assembly=MvvmCross.Platforms.Wpf"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:boards="clr-namespace:Battleships.Core.Boards;assembly=Battleships.Core"
+      mc:Ignorable="d" 
+      Height="400" Width="400">
+    <DockPanel>
+        <Button Content="New game" mvx:Bi.nd="Command NewGameCommand" DockPanel.Dock="Top" />
+        <Label DockPanel.Dock="Top" Content="{Binding StateText, Mode=OneWay}" HorizontalContentAlignment="Center"></Label>
+        <Viewbox Margin="20">
+            <Canvas Width="{Binding Source={x:Static boards:Board.Columns}}" Height="{Binding Source={x:Static boards:Board.Rows}}" MouseDown="BoardMouseDown">
+                <Canvas.Style>
+                    <Style TargetType="{x:Type Canvas}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Board.State}" Value="{x:Static boards:BoardState.Uninitialized}">
+                                <Setter Property="Visibility" Value="Collapsed" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Canvas.Style>
+                <ItemsControl ItemsSource="{Binding Cells}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <Canvas Width="{Binding Source={x:Static boards:Board.Columns}}" Height="{Binding Source={x:Static boards:Board.Rows}}" />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemContainerStyle>
+                        <Style TargetType="ContentPresenter">
+                            <Setter Property="Width" Value="1" />
+                            <Setter Property="Height" Value="1" />
+                            <Setter Property="Canvas.Top" Value="{Binding Row, Mode=OneWay}" />
+                            <Setter Property="Canvas.Left" Value="{Binding Column, Mode=OneWay}" />
+                        </Style>
+                    </ItemsControl.ItemContainerStyle>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border Margin="0.02,0.02,0.02,0.02">
+                                <Border.Style>
+                                    <Style TargetType="{x:Type Border}">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding CellType}" Value="{x:Static boards:CellType.Covered}">
+                                                <Setter Property="Background" Value="LightSkyBlue" />
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding CellType}" Value="{x:Static boards:CellType.Missed}">
+                                                <Setter Property="Background" Value="Yellow" />
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding CellType}" Value="{x:Static boards:CellType.Hit}">
+                                                <Setter Property="Background" Value="OrangeRed" />
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding CellType}" Value="{x:Static boards:CellType.Sunk}">
+                                                <Setter Property="Background" Value="Red" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Border.Style>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </Canvas>
+        </Viewbox>
+    </DockPanel>
+</views:MvxWpfView>

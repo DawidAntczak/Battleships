@@ -6,11 +6,10 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:boards="clr-namespace:Battleships.Core.Boards;assembly=Battleships.Core"
-      mc:Ignorable="d" 
-      Height="400" Width="400">
+      mc:Ignorable="d">
     <DockPanel>
-        <Button Content="New game" mvx:Bi.nd="Command NewGameCommand" DockPanel.Dock="Top" />
-        <Label DockPanel.Dock="Top" Content="{Binding StateText, Mode=OneWay}" HorizontalContentAlignment="Center"></Label>
+        <Button DockPanel.Dock="Top" Content="New Game"  mvx:Bi.nd="Command NewGameCommand" Margin="5,5,5,5" />
+        <Label DockPanel.Dock="Top" Content="{Binding StateText, Mode=OneWay}" HorizontalContentAlignment="Center" Margin="5,5,5,5"></Label>
         <Viewbox Margin="20">
             <Canvas Width="{Binding Source={x:Static boards:Board.Columns}}" Height="{Binding Source={x:Static boards:Board.Rows}}" MouseDown="BoardMouseDown">
                 <Canvas.Style>
@@ -22,7 +21,7 @@
                         </Style.Triggers>
                     </Style>
                 </Canvas.Style>
-                <ItemsControl ItemsSource="{Binding Cells}">
+                <ItemsControl ItemsSource="{Binding Board.Cells.Values}">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
                             <Canvas Width="{Binding Source={x:Static boards:Board.Columns}}" Height="{Binding Source={x:Static boards:Board.Rows}}" />
@@ -42,16 +41,16 @@
                                 <Border.Style>
                                     <Style TargetType="{x:Type Border}">
                                         <Style.Triggers>
-                                            <DataTrigger Binding="{Binding CellType}" Value="{x:Static boards:CellType.Covered}">
+                                            <DataTrigger Binding="{Binding Type}" Value="{x:Static boards:CellType.Undiscovered}">
                                                 <Setter Property="Background" Value="LightSkyBlue" />
                                             </DataTrigger>
-                                            <DataTrigger Binding="{Binding CellType}" Value="{x:Static boards:CellType.Missed}">
+                                            <DataTrigger Binding="{Binding Type}" Value="{x:Static boards:CellType.MissedShot}">
                                                 <Setter Property="Background" Value="Yellow" />
                                             </DataTrigger>
-                                            <DataTrigger Binding="{Binding CellType}" Value="{x:Static boards:CellType.Hit}">
+                                            <DataTrigger Binding="{Binding Type}" Value="{x:Static boards:CellType.HitShip}">
                                                 <Setter Property="Background" Value="OrangeRed" />
                                             </DataTrigger>
-                                            <DataTrigger Binding="{Binding CellType}" Value="{x:Static boards:CellType.Sunk}">
+                                            <DataTrigger Binding="{Binding Type}" Value="{x:Static boards:CellType.SunkShip}">
                                                 <Setter Property="Background" Value="Red" />
                                             </DataTrigger>
                                         </Style.Triggers>

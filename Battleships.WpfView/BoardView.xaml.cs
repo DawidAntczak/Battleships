@@ -17,13 +17,13 @@ namespace Battleships.WpfView
         private void BoardMouseDown(object sender, MouseButtonEventArgs e)
         {
             var point = Mouse.GetPosition(sender as Canvas);
-            var row = (int)point.Y;
-            var column = (int)point.X;
+
+            var position = new Position((int)point.Y, (int)point.X);
 
             var boardViewModel = (BoardViewModel)ViewModel;
-            if (boardViewModel.ShotCommand?.CanExecute() == true)
+            if (boardViewModel.ShotCommand?.CanExecute(position) == true)
             {
-                boardViewModel.ShotCommand?.Execute(new Position(row, column));
+                boardViewModel.ShotCommand?.Execute(position);
             }
         }
     }

@@ -7,18 +7,18 @@ namespace Battleships.Core.Boards
         public int Row { get; }
         public int Column { get; }
 
-        public CellType CellType
+        public CellType Type
         {
-            get { return _cellType; }
-            internal set { SetProperty(ref _cellType, value); }
+            get { return _type; }
+            internal set { SetProperty(ref _type, value); }
         }
-        private CellType _cellType;
+        private CellType _type;
 
         public Cell(int row, int column, CellType cellType)
         {
             Row = row;
             Column = column;
-            _cellType = cellType;
+            _type = cellType;
         }
     }
 }

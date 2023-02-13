@@ -1,4 +1,6 @@
 ﻿using Battleships.Core.Boards;
+using Battleships.Core.Placings;
+using MvvmCross;
 using MvvmCross.IoC;
 using MvvmCross.ViewModels;
 
@@ -8,28 +10,15 @@ namespace Battleships.Core
     {
         public override void Initialize()
         {
-            ComposeServices();
-
+            ComposeTypes();
             RegisterAppStart<BoardViewModel>();
         }
 
-        private void ComposeServices()
+        private void ComposeTypes()
         {
-            CreatableTypes()
-                .EndingWith("Strategy")
-                .AsInterfaces()
-                .RegisterAsLazySingleton();
-
-            CreatableTypes()
-                .EndingWith("Generator")
-                .AsInterfaces()
-                .RegisterAsLazySingleton();
-
-
-            CreatableTypes()
-                .EndingWith("Board")
-                .AsTypes()
-                .RegisterAsLazySingleton();
+            Mvx.IoCProvider.RegisterType<IPlacingStrategy, RandomPlacingStrategy>();
+            Mvx.IoCProvider.RegisterType<IRandomNumberGenerator, RandomNumberGenerator>();
+            Mvx.IoCProvider.RegisterType<Board>();
         }
     }
 }

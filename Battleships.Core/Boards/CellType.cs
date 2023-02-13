@@ -2,9 +2,9 @@
 {
     public enum CellType
     {
-        Covered,
-        Missed,
-        Hit,
-        Sunk
+        Undiscovered,
+        MissedShot,
+        HitShip,
+        SunkShip
     }
 }

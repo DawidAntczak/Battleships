@@ -6,7 +6,4 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
         Title="Battleships" Height="450" Width="450">
-    <Grid>
-
-    </Grid>
 </views:MvxWindow>

@@ -1,5 +1,5 @@
 ﻿using Battleships.Core.Boards;
-using Battleships.Core.Ships;
+using Battleships.Core.Placings.Extensions;
 
 namespace Battleships.Core.Placings
 {
@@ -12,12 +12,12 @@ namespace Battleships.Core.Placings
             _randomNumberGenerator = randomNumberGenerator;
         }
 
-        public ShipPlacement PlaceShips()
+        public ShipPlacementContainer PlaceShips()
         {
-            var shipPlacement = new ShipPlacement();
+            var shipPlacement = new ShipPlacementContainer();
 
-            var _shipSizesToGenerate = new int[] { 5, 4, 4 };
-            foreach (var shipSize in _shipSizesToGenerate)
+            var shipSizesToGenerate = new int[] { 5, 4, 4 };
+            foreach (var shipSize in shipSizesToGenerate)
             {
                 PlaceShip(shipSize, shipPlacement);
             }
@@ -25,24 +25,24 @@ namespace Battleships.Core.Placings
             return shipPlacement;
         }
 
-        private void PlaceShip(int shipSize, ShipPlacement shipPlacement)
+        private void PlaceShip(int shipSize, ShipPlacementContainer shipPlacement)
         {
-            bool placed = false;
-            
+            var placed = false;
+
             while (!placed)
             {
                 var startPosition = PickRandomFreePosition(shipPlacement);
-                var shuffledEndPositions = Shuffle(CalculateEndPositionsInBoardRange(startPosition, shipSize)).GetEnumerator();
+                var possibleEndPositions = CalculateEndPositionsInBoardRange(startPosition, shipSize);
 
-                using var endPositionsEnumerator = shuffledEndPositions;
-                while (!placed && endPositionsEnumerator.MoveNext())
+                using var shuffledEndPositionsEnumerator = possibleEndPositions.Shuffle(_randomNumberGenerator).GetEnumerator();
+                while (!placed && shuffledEndPositionsEnumerator.MoveNext())
                 {
-                    placed = shipPlacement.TryPlace(new Ship(startPosition, endPositionsEnumerator.Current));
+                    placed = shipPlacement.TryPlace(new Ship(startPosition, shuffledEndPositionsEnumerator.Current));
                 }
             }
         }
 
-        private Position PickRandomFreePosition(ShipPlacement shipPlacement)
+        private Position PickRandomFreePosition(ShipPlacementContainer shipPlacement)
         {
             return RandomPositionOnBoardGenerator()
                 .First(position => !shipPlacement.OccupiedPositions.ContainsKey(position));
@@ -62,22 +62,14 @@ namespace Battleships.Core.Placings
         private IEnumerable<Position> CalculateEndPositionsInBoardRange(Position startPosition, int shipSize)
         {
             var reducedSize = shipSize - 1;
-            var offsets = new[] { (reducedSize, 0), (0, reducedSize), (-reducedSize, 0), (0, -reducedSize) };
+            var offsets = new (int RowOffset, int ColumnOffset)[] {
+                (reducedSize, 0), (0, reducedSize),
+                (-reducedSize, 0), (0, -reducedSize)
+            };
 
             return offsets
-                .Select(offset => startPosition.Translated(offset.Item1, offset.Item2))
-                .Where(IsPositionInBoardRange);
-        }
-
-        private bool IsPositionInBoardRange(Position position)
-        {
-            // idk but should be probably shifted to Board class
-            return position.Row >= 0 && position.Row < Board.Rows && position.Column >= 0 && position.Column < Board.Columns;
-        }
-
-        private IEnumerable<T> Shuffle<T>(IEnumerable<T> enumerable)
-        {
-            return enumerable.OrderBy(x => _randomNumberGenerator.Generate());
+                .Select(offset => startPosition.Shifted(offset.RowOffset, offset.ColumnOffset))
+                .Where(Board.IsValidBoardPosition);
         }
     }
 }

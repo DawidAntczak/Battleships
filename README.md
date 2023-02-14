@@ -1,6 +1,7 @@
 # Battleships
 
 Simple one sided Battleships game implemented based on MVVM using *MvvmCross* with WPF as UI.
+Built game on .NET 6 for Windows can be downloaded as ZIP from releases.
 
 - ![#ffff00](https://placehold.co/15x15/ffff00/f03c15.png) `Yellow` - miss
 - ![#ffA500](https://placehold.co/15x15/ffA500/f03c15.png) `Orange` - hit ship

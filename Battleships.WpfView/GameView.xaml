@@ -66,7 +66,7 @@
                                                 <Setter Property="Background" Value="Yellow" />
                                             </DataTrigger>
                                             <DataTrigger Binding="{Binding Type}" Value="{x:Static boards:CellType.HitShip}">
-                                                <Setter Property="Background" Value="OrangeRed" />
+                                                <Setter Property="Background" Value="Orange" />
                                             </DataTrigger>
                                             <DataTrigger Binding="{Binding Type}" Value="{x:Static boards:CellType.SunkShip}">
                                                 <Setter Property="Background" Value="Red" />

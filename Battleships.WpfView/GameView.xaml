@@ -6,22 +6,40 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:boards="clr-namespace:Battleships.Core.Boards;assembly=Battleships.Core"
+      xmlns:games="clr-namespace:Battleships.Core.Games;assembly=Battleships.Core"
       mc:Ignorable="d">
     <DockPanel>
         <Button DockPanel.Dock="Top" Content="New Game"  mvx:Bi.nd="Command NewGameCommand" Margin="5,5,5,5" />
-        <Label DockPanel.Dock="Top" Content="{Binding StateText, Mode=OneWay}" HorizontalContentAlignment="Center" Margin="5,5,5,5"></Label>
+        <Label DockPanel.Dock="Top" HorizontalContentAlignment="Center" Margin="5,5,5,5">
+            <Label.Style>
+                <Style TargetType="{x:Type Label}">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Game.State}" Value="{x:Static games:GameState.Uninitialized}">
+                            <Setter Property="Content" Value="Start the game" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Game.State}" Value="{x:Static games:GameState.Started}">
+                            <Setter Property="ContentStringFormat" Value="Ships left: {0}" />
+                            <Setter Property="Content" Value="{Binding Game.Board.ShipsLeft}" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Game.State}" Value="{x:Static games:GameState.Finished}">
+                            <Setter Property="Content" Value="You sunk all ships!" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </Label.Style>
+        </Label>
         <Viewbox Margin="20">
             <Canvas Width="{Binding Source={x:Static boards:Board.Columns}}" Height="{Binding Source={x:Static boards:Board.Rows}}" MouseDown="BoardMouseDown">
                 <Canvas.Style>
                     <Style TargetType="{x:Type Canvas}">
                         <Style.Triggers>
-                            <DataTrigger Binding="{Binding Board.State}" Value="{x:Static boards:BoardState.Uninitialized}">
+                            <DataTrigger Binding="{Binding Game.State}" Value="{x:Static games:GameState.Uninitialized}">
                                 <Setter Property="Visibility" Value="Collapsed" />
                             </DataTrigger>
                         </Style.Triggers>
                     </Style>
                 </Canvas.Style>
-                <ItemsControl ItemsSource="{Binding Board.Cells.Values}">
+                <ItemsControl ItemsSource="{Binding Game.Board.Cells.Values}">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
                             <Canvas Width="{Binding Source={x:Static boards:Board.Columns}}" Height="{Binding Source={x:Static boards:Board.Rows}}" />

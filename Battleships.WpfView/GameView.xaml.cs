@@ -1,4 +1,5 @@
 ﻿using Battleships.Core.Boards;
+using Battleships.Core.Games;
 using MvvmCross.Platforms.Wpf.Views;
 using MvvmCross.ViewModels;
 using System.Windows.Controls;
@@ -6,7 +7,7 @@ using System.Windows.Input;
 
 namespace Battleships.WpfView
 {
-    [MvxViewFor(typeof(BoardViewModel))]
+    [MvxViewFor(typeof(GameViewModel))]
     public partial class BoardView : MvxWpfView
     {
         public BoardView()
@@ -20,10 +21,10 @@ namespace Battleships.WpfView
 
             var position = new Position((int)point.Y, (int)point.X);
 
-            var boardViewModel = (BoardViewModel)ViewModel;
+            var boardViewModel = (GameViewModel)ViewModel;
             if (boardViewModel.ShotCommand?.CanExecute(position) == true)
             {
-                boardViewModel.ShotCommand?.Execute(position);
+                boardViewModel.ShotCommand.Execute(position);
             }
         }
     }

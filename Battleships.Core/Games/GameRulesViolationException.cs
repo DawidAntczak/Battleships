@@ -1,6 +1,6 @@
 ﻿using System.Runtime.Serialization;
 
-namespace Battleships.Core.Boards
+namespace Battleships.Core.Games
 {
     public class GameRulesViolationException : Exception
     {

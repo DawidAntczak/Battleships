@@ -1,4 +1,6 @@
-﻿namespace Battleships.Core.Boards
+﻿using Battleships.Core.Boards;
+
+namespace Battleships.Core.Games
 {
     public static class GameRulesGuard
     {

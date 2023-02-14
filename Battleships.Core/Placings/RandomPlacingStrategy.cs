@@ -69,7 +69,13 @@ namespace Battleships.Core.Placings
 
             return offsets
                 .Select(offset => startPosition.Shifted(offset.RowOffset, offset.ColumnOffset))
-                .Where(Board.IsValidBoardPosition);
+                .Where(IsValidBoardPosition);
         }
+
+        private bool IsValidBoardPosition(Position position)
+            => position.Row >= 0
+            && position.Row < Board.Rows
+            && position.Column >= 0
+            && position.Column < Board.Columns;
     }
 }

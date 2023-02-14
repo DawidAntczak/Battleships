@@ -53,7 +53,7 @@ namespace Battleships.Core.Test.Placings
 
             // Assert
             var occupiedPositions = shipPlacement.OccupiedPositions.Keys;
-            occupiedPositions.Should().AllSatisfy(x => Board.IsValidBoardPosition(x));
+            occupiedPositions.Should().AllSatisfy(x => IsValidBoardPosition(x));
         }
 
 
@@ -69,5 +69,15 @@ namespace Battleships.Core.Test.Placings
             var occupiedPositionsIntersection = firstShipPlacement.OccupiedPositions.Intersect(secondShipPlacement.OccupiedPositions);
             occupiedPositionsIntersection.Count().Should().BeLessThan(firstShipPlacement.OccupiedPositions.Count);
         }
+
+        #region Helpers
+
+        private bool IsValidBoardPosition(Position position)
+            => position.Row >= 0
+            && position.Row < Board.Rows
+            && position.Column >= 0
+            && position.Column < Board.Columns;
+
+        #endregion Helpers
     }
 }

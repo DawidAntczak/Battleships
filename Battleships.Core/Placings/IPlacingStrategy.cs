@@ -2,6 +2,6 @@
 {
     public interface IPlacingStrategy
     {
-        ShipPlacementContainer PlaceShips();
+        IShipPlacementContainer PlaceShips();
     }
 }

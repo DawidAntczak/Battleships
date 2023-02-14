@@ -8,7 +8,7 @@ namespace Battleships.Core.Boards
         public const int Rows = 10;
         public const int Columns = 10;
 
-        public IReadOnlyDictionary<Position, Cell> Cells { get; } // dictionary implements IEnumerable and cooperates better than a multidimensional [x,y] array
+        public IReadOnlyDictionary<Position, Cell> Cells { get; } // dictionary implements IEnumerable<T> and cooperates better than a multidimensional [x,y] array
 
         public BoardState State { get => _state; set { _state = value; RaisePropertyChanged(() => State); } }
         private BoardState _state = BoardState.Uninitialized;
@@ -19,7 +19,7 @@ namespace Battleships.Core.Boards
         private readonly IPlacingStrategy _shipPlacingStrategy;
 
         private readonly ISet<Position> _hits = new HashSet<Position>();
-        private ShipPlacementContainer _shipPlacement = new();
+        private IShipPlacementContainer _shipPlacement = new ShipPlacementContainer();
 
         public Board(IPlacingStrategy computerShipPlacingStrategy)
         {
@@ -38,7 +38,7 @@ namespace Battleships.Core.Boards
         {
             _hits.Clear();
             _shipPlacement = _shipPlacingStrategy.PlaceShips();
-            ShipsLeft = _shipPlacement.Ships.Count();
+            ShipsLeft = _shipPlacement.Ships.Count(); // silently assumes that _shipPlacingStrategy generated some ships because otherwise the game makes no sense
             foreach (var cell in Cells.Values)
             {
                 cell.Type = CellType.Undiscovered;

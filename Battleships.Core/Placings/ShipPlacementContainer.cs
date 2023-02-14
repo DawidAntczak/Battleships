@@ -2,7 +2,7 @@
 
 namespace Battleships.Core.Placings
 {
-    public class ShipPlacementContainer
+    internal class ShipPlacementContainer : IShipPlacementContainer
     {
         public IReadOnlyDictionary<Position, Ship> OccupiedPositions { get => _occupiedPositions; }
         public IEnumerable<Ship> Ships { get => _occupiedPositions.Values.Distinct(); }
@@ -21,8 +21,7 @@ namespace Battleships.Core.Placings
 
         private bool CheckIfCanPlace(Ship ship)
         {
-            // if no ship position intersects with already occupied positions
-            return !_occupiedPositions.Keys.Intersect(ship.OccupiedPositions).Any();
+            return !_occupiedPositions.Keys.Intersect(ship.OccupiedPositions).Any();    // no ship position intersects with already occupied positions
         }
 
         private void Place(Ship ship)

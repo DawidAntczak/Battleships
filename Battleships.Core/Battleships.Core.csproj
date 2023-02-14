@@ -5,9 +5,12 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
-
+  
+  <ItemGroup>
+    <InternalsVisibleTo Include="Battleships.Core.Test" />
+  </ItemGroup>
+  
   <ItemGroup>
     <PackageReference Include="MvvmCross" Version="9.0.9" />
   </ItemGroup>
-
 </Project>

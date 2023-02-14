@@ -12,7 +12,7 @@ namespace Battleships.Core.Placings
             _randomNumberGenerator = randomNumberGenerator;
         }
 
-        public ShipPlacementContainer PlaceShips()
+        public IShipPlacementContainer PlaceShips()
         {
             var shipPlacement = new ShipPlacementContainer();
 
